@@ -38,6 +38,7 @@ void kernel_main(void)
         .pitch = fb_width * sizeof(uint16_t),
         .framebuffer = fb_one
     };
+    printf("Writing initial display list.r\n");
     write_display_list(&plane, 1);
 
     /* Pause for a few seconds... */
@@ -52,6 +53,7 @@ void kernel_main(void)
     };
 
     /* Clear the framebuffer and do some drawing... */
+    printf("Clearing framebuffer and drawing.\r\n");
     clear_plane_16(plane, GREEN_16);
     draw_rectangle_16(plane, WHITE_16, r);
 
@@ -59,6 +61,7 @@ void kernel_main(void)
     delay(9000000);
 
     /* Move the plane across the screen. */
+    printf("Translating plane across screen.r\n");
     for (int i = 0; i < 10; i++) {
         plane.start_x = i * ((screen_width - fb_width) / 10);
         plane.start_y = i * ((screen_height - fb_height) / 10);
@@ -90,6 +93,7 @@ void kernel_main(void)
     planes[3].format = HVS_PIXEL_FORMAT_RGBA8888;
     planes[3].pitch = fb_width * sizeof(uint32_t);
 
+    printf("Updating display list with 4 framebuffers.r\n");
     write_display_list(planes, 4);
 
     /* Clear the 3 new framebuffers. */
@@ -110,11 +114,13 @@ void kernel_main(void)
     planes[3].start_x = (screen_width - fb_width) / 2;
     planes[3].start_y = (screen_height - fb_height) / 2;
 
+    printf("Moving the fourth plane to the center of the screen.r\n");
     write_display_list(planes, 4);
 
     delay(9000000);
 
     /* Make the fourth plane partially-transparent with a yellow square. */
+    printf("Clearing the fourth plane with a partially-transparent color.r\n");
     uint32_t half_trasparent_red = 0x7F0000FF;
     clear_plane_32(planes[3], half_trasparent_red);
     draw_rectangle_32(planes[3], YELLOW_32, r);
@@ -122,6 +128,7 @@ void kernel_main(void)
     delay(9000000);
 
     int first_plane = 0;
+    printf("Now rotating framebuffers in an infinite loop.\r\n");
     while (1) {
         /* Rotate the planes every so often... */
         for (int y = 0; y < 2; y++) {
