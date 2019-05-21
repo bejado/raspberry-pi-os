@@ -33,7 +33,7 @@ typedef struct {
     hvs_pixel_format format;            // format of the pixels in the plane
     hvs_pixel_order pixel_order;        // order of the components in each pixel
     uint16_t start_x;                   // x position of the left of the plane
-    uint16_t start_y;                   // y offset of the top of the plane
+    uint16_t start_y;                   // y position of the top of the plane
     uint16_t height;                    // height of the plane, in pixels
     uint16_t width;                     // width of the plane, in pixels
     uint16_t pitch;                     // number of bytes between the start of each scanline
